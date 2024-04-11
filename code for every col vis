@@ -1,0 +1,10 @@
+for col in data.columns: # repeat these operations for each column
+    print(col)
+    print('Skew :',round(data[col].skew(),2)) # a way of measuring how much a distribution departs from a normal distribution
+    plt.figure(figsize=(15,4)) # specifying the height and width of the plot
+    plt.subplot(1,2,1) # subplot(nrows, ncols, index)
+    data[col].hist() # histogram for each column --> data[col].hist()
+    plt.ylabel('count')
+    plt.subplot(1,2,2) # subplot(nrows, ncols, index)
+    sns.boxplot(x=data[col]) #boxplot for each column --> sns.boxplot(x=data[col ])
+    plt.show()
