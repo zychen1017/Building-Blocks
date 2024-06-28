@@ -7,6 +7,9 @@ plt.figure(figsize=(10, 10))
 sns.heatmap(correlation_matrix_features, annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.5)
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Relationship Among Features
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
 # Set correlation thresholds
 highly_correlated_threshold = 0.7
 moderately_correlated_threshold = 0.5
@@ -40,3 +43,29 @@ for i in range(len(correlation_matrix_features.columns)):
 correlated_pairs_df = pd.DataFrame(correlated_pairs)
 
 print(correlated_pairs_df)
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# Relationships Between Target Variable and Each Feature
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# Create a matrix of correlation between target variable and each feature
+correlation_with_target = X_train.apply(lambda feature: feature.corr(y_train)).sort_values(ascending=False)
+correlation_with_target
+
+# List to store correlated pairs, correlation values, and correlation levels
+correlated_pairs_target = []
+
+# Iterate through features and calculate correlation with the target variable 'Survived'
+for feature in correlation_with_target.index:
+    correlation_value = correlation_with_target.loc[feature]
+    correlation_level = get_correlation_level(correlation_value)
+    
+    if correlation_level is not None:
+        correlated_pairs_target.append({'Feature': feature,
+                                        'Target Variable': 'Survived',
+                                        'Correlation Value': correlation_value,
+                                        'Correlation Level': correlation_level})
+
+# Convert the list of dictionaries into a DataFrame
+correlated_pairs_target_df = pd.DataFrame(correlated_pairs_target)
+
+print(correlated_pairs_target_df)
