@@ -1,0 +1,42 @@
+# Create a correlation matrix of train_features
+correlation_matrix_features = X_train.corr()
+correlation_matrix_features
+
+# Create a heatmap of the correlation matrix
+plt.figure(figsize=(10, 10))
+sns.heatmap(correlation_matrix_features, annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.5)
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# Set correlation thresholds
+highly_correlated_threshold = 0.7
+moderately_correlated_threshold = 0.5
+
+# List to store correlated pairs, correlation values, and correlation levels
+correlated_pairs = []
+
+# Define function to determine correlation level
+def get_correlation_level(correlation_value):
+    if abs(correlation_value) >= highly_correlated_threshold:
+        return 'Highly correlated'
+    elif abs(correlation_value) >= moderately_correlated_threshold:
+        return 'Moderately correlated'
+    else:
+        return None
+
+# Iterate through pairs of features and accumulate moderately and highly correlated pairs
+for i in range(len(correlation_matrix_features.columns)):
+    for j in range(i + 1, len(correlation_matrix_features.columns)):
+        feature1, feature2 = correlation_matrix_features.columns[i], correlation_matrix_features.columns[j]
+        correlation_value = correlation_matrix_features.loc[feature1, feature2]
+        correlation_level = get_correlation_level(correlation_value)
+        
+        if correlation_level is not None:
+            correlated_pairs.append({'Feature 1': feature1,
+                                     'Feature 2': feature2,
+                                     'Correlation Value': correlation_value,
+                                     'Correlation Level': correlation_level})
+
+# Convert the list of dictionaries into a DataFrame
+correlated_pairs_df = pd.DataFrame(correlated_pairs)
+
+print(correlated_pairs_df)
