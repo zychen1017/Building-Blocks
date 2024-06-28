@@ -1,0 +1,9 @@
+# First things to do when you have a dataset
+train_data = pd.read_csv()
+train_data.head()
+train_data.info()
+train_data.describe()
+train_data.describe(include=['O'])
+train_data.nunique()
+for col in ['Survived', 'Pclass', 'Sex', 'SibSp', 'Parch', 'Embarked']:
+    print(f'Unique values in {col}: {train_data[col].unique()}')
