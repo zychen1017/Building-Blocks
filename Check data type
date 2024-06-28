@@ -1,0 +1,13 @@
+def df_dtypes(df):
+    pd.set_option('display.max_colwidth', None)
+
+    df_dtypes = df.columns.groupby(df.dtypes)
+    df_dtypes = pd.DataFrame({
+        'dtype':     list(df_dtypes.keys()),
+        '# columns': [len(df_dtypes[key])  for key in df_dtypes.keys()],
+        'columns':   [list(df_dtypes[key]) for key in df_dtypes.keys()],
+    })
+    df_dtypes = df_dtypes.style.applymap(lambda x:'text-align: left', subset=['columns'])
+    return df_dtypes
+
+df_dtypes(train)
