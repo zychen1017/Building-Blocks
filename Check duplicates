@@ -1,0 +1,21 @@
+# Check for duplicate Ids in train_data and in test_data
+datasets = [(train_data, "train_data"), (test_data, "test_data")]
+
+for data, data_name in datasets:
+    duplicate_ids = data[data['Id'].duplicated()]['Id']
+    if not duplicate_ids.empty:
+        print(f"Duplicates are found within the Id column of {data_name}: {', '.join(duplicate_ids.astype(str))}.")
+    else:
+        print(f"No duplicates are found within the Id column of {data_name}.")
+
+
+# Check if any ID in train_data is repeated in test_data and vice versa
+train_ids = set(train_data['Id'])
+test_ids = set(test_data['Id'])
+
+train_duplicates_in_test = train_ids.intersection(test_ids)
+
+if train_duplicates_in_test:
+    print("Some IDs in train_data are repeated in test_data:", train_duplicates_in_test)
+else:
+    print("No IDs in train_data are repeated in test_data.")
