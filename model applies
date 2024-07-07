@@ -1,0 +1,41 @@
+from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
+from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import GaussianNB
+from xgboost import XGBClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neural_network import MLPClassifier
+from catboost import CatBoostClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import KFold,train_test_split,cross_val_score
+
+catboost = CatBoostClassifier(verbose=False)
+random_forest = RandomForestClassifier()
+svm = SVC()
+knn = KNeighborsClassifier()
+logistic_regression = LogisticRegression()
+naive_bayes = GaussianNB()
+xgboost = XGBClassifier()
+adaboost = AdaBoostClassifier()
+decision_tree = DecisionTreeClassifier()
+mlp = MLPClassifier()
+
+models=[random_forest,logistic_regression,svm,knn,naive_bayes,xgboost,adaboost,catboost]
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def eval_model(model):
+    cv = KFold(n_splits=7)
+    model.fit(x_train, y_train)
+    score = cross_val_score(model, X, Y, cv=cv, scoring='accuracy') * 100
+    eval_df.loc[len(eval_df)] = [str(model), score.mean()]
+
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  eval_df = pd.DataFrame(columns=['Model', 'Cross Validated Accuracy'],index=None)
+
+for model in models:
+    eval_model(model)
+
+eval_df
