@@ -16,3 +16,12 @@ for col in numeric_cols: # repeat these operations for each column
     plt.subplot(1,2,2) # subplot(nrows, ncols, index)
     sns.boxplot(x=data[col]) #boxplot for each column --> sns.boxplot(x=data[col ])
     plt.show()
+
+
+for col in categorical_cols: 
+    plt.figure(figsize=(15, 4)) # specifying the height and width of the plot
+    sns.countplot(data=df_train,y=col)
+    plt.title(f'Bar Plot for {col}')
+    plt.xlabel(col)
+    plt.ylabel('Frequency')
+    plt.show()
