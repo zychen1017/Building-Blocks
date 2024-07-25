@@ -33,7 +33,7 @@ def eval_model(model):
 
   ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-  eval_df = pd.DataFrame(columns=['Model', 'Cross Validated Accuracy'],index=None)
+eval_df = pd.DataFrame(columns=['Model', 'Cross Validated Accuracy'],index=None)
 
 for model in models:
     eval_model(model)
